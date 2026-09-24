@@ -149,6 +149,7 @@ function ListingPageContent() {
 
         <HostProfileSection
           name={LISTING_DATA.host.name}
+          avatarUrl={LISTING_DATA.host.avatarUrl}
           avatarColor={LISTING_DATA.host.avatarColor}
           reviewCount={LISTING_DATA.host.reviewCount}
           rating={LISTING_DATA.host.rating}
@@ -156,6 +157,7 @@ function ListingPageContent() {
           bornDecade={LISTING_DATA.host.bornDecade}
           responseRate={LISTING_DATA.host.responseRate}
           responseTime={LISTING_DATA.host.responseTime}
+          school={LISTING_DATA.host.school}
           coHosts={LISTING_DATA.coHosts}
         />
 

@@ -64,6 +64,7 @@ export const LISTING_DATA = {
   cancellationDate: "17 October",
   host: {
     name: "Mirashya Homes",
+    avatarUrl: "/mirashya-logo.png",
     avatarColor: "#0b3d2e",
     yearsHosting: 2,
     reviewCount: 1463,
@@ -74,14 +75,14 @@ export const LISTING_DATA = {
     school: "NICMAR GOA",
   },
   coHosts: [
-    { name: "Sharath" },
-    { name: "Aman Dev Pahwa" },
-    { name: "Maria Karen Priyanka" },
-    { name: "Simran" },
-    { name: "Pallavi" },
-    { name: "Sanyukta" },
-    { name: "Shruti", avatarColor: "#f4a4b8" },
-    { name: "Amisha", avatarColor: "#c9d6f7" },
+    { name: "Sharath", avatarUrl: "/cohosts/sharath.png" },
+    { name: "Aman Dev Pahwa", avatarUrl: "/cohosts/aman.png" },
+    { name: "Maria Karen Priyanka", avatarUrl: "/cohosts/maria.png" },
+    { name: "Simran", avatarUrl: "/cohosts/simran.png" },
+    { name: "Pallavi", avatarUrl: "/cohosts/pallavi.png" },
+    { name: "Sanyukta", avatarUrl: "/cohosts/sanyukta.png" },
+    { name: "Shruti", avatarUrl: "/cohosts/shruti.png" },
+    { name: "Amisha", avatarUrl: "/cohosts/amisha.png" },
   ],
   highlights: [
     {
