@@ -5,40 +5,15 @@ import Image from "next/image";
 import { Grid } from "lucide-react";
 import { motion } from "framer-motion";
 import { Photo } from "@/data/listingData";
-import { OriginRect } from "./SharedElementPhotoModal";
 
 interface HeroPhotoGridProps {
   photos: Photo[];
   onOpenPhotoTour: (photoId?: number) => void;
-  onOpenExpandedPhoto?: (photoId: number, rect: OriginRect) => void;
 }
 
-export function HeroPhotoGrid({
-  photos,
-  onOpenPhotoTour,
-  onOpenExpandedPhoto,
-}: HeroPhotoGridProps) {
+export function HeroPhotoGrid({ photos, onOpenPhotoTour }: HeroPhotoGridProps) {
   // 5 photos for the hero mosaic
   const heroPhotos = photos.slice(0, 5);
-
-  const handlePhotoClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    photoId: number,
-    borderRadius?: string
-  ) => {
-    if (onOpenExpandedPhoto) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      onOpenExpandedPhoto(photoId, {
-        top: Math.round(rect.top),
-        left: Math.round(rect.left),
-        width: Math.round(rect.width),
-        height: Math.round(rect.height),
-        borderRadius: borderRadius ?? 16,
-      });
-    } else {
-      onOpenPhotoTour(photoId);
-    }
-  };
 
   return (
     <div id="photos" className="relative mb-6">
@@ -46,12 +21,10 @@ export function HeroPhotoGrid({
         {/* Main Large Photo (Left 50% - col-span-2 row-span-2) */}
         {heroPhotos[0] && (
           <motion.button
-            whileHover={{ scale: 1.012 }}
-            whileTap={{ scale: 0.988 }}
+            whileHover={{ scale: 1.015 }}
+            whileTap={{ scale: 0.985 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            onClick={(e) =>
-              handlePhotoClick(e, heroPhotos[0].id, "16px 0 0 16px")
-            }
+            onClick={() => onOpenPhotoTour(heroPhotos[0].id)}
             aria-label={`View photo: ${heroPhotos[0].alt}`}
             className="group relative col-span-2 row-span-2 h-full w-full cursor-pointer overflow-hidden bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ff385c]"
           >
@@ -67,34 +40,25 @@ export function HeroPhotoGrid({
         )}
 
         {/* Right 4 Photos (2x2 grid) */}
-        {heroPhotos.slice(1, 5).map((photo, idx) => {
-          const cornerRadius =
-            idx === 1
-              ? "0 16px 0 0"
-              : idx === 3
-              ? "0 0 16px 0"
-              : "0px";
-
-          return (
-            <motion.button
-              key={photo.id}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.15, ease: "easeOut" }}
-              onClick={(e) => handlePhotoClick(e, photo.id, cornerRadius)}
-              aria-label={`View photo: ${photo.alt}`}
-              className="group relative col-span-1 row-span-1 h-full w-full cursor-pointer overflow-hidden bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ff385c]"
-            >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 1120px) 50vw, 280px"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </motion.button>
-          );
-        })}
+        {heroPhotos.slice(1, 5).map((photo) => (
+          <motion.button
+            key={photo.id}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            onClick={() => onOpenPhotoTour(photo.id)}
+            aria-label={`View photo: ${photo.alt}`}
+            className="group relative col-span-1 row-span-1 h-full w-full cursor-pointer overflow-hidden bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ff385c]"
+          >
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(max-width: 1120px) 50vw, 280px"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </motion.button>
+        ))}
       </div>
 
       {/* "Show all photos" floating button */}

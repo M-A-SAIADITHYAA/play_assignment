@@ -208,3 +208,15 @@ This document records the exact sequence of prompts, agent directives, and execu
     * Also integrated avatar images into the full reviews modal.
   * Verified visual design and interactive toggle behavior via Chrome CDP automation and screenshot comparisons.
   * Rebuilt production build and updated [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).
+
+---
+
+### Step 17: Revert Shared-Element Image Expansion Animation
+* **User Prompt**: *"revert back the shared-element image expansion and closing animation on the left side h"*
+* **Agent Action**:
+  * Reverted [`src/components/HeroPhotoGrid.tsx`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone/src/components/HeroPhotoGrid.tsx) and [`src/app/page.tsx`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone/src/app/page.tsx):
+    * Removed `SharedElementPhotoModal` component and `OriginRect` measurements.
+    * Restored clean, direct modal opening behavior (`onOpenPhotoTour(photoId)`) when clicking hero grid images.
+    * Removed obsolete `src/components/SharedElementPhotoModal.tsx`.
+  * Verified build (`npm run build`) and tested modal navigation via Chrome automation.
+  * Rebuilt production build and updated [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).

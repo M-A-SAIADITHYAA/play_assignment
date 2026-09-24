@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { Header } from "@/components/Header";
@@ -22,10 +22,6 @@ import { ThingsToKnowSection } from "@/components/ThingsToKnowSection";
 import { NearbyListingsSection } from "@/components/NearbyListingsSection";
 import { PhotoTourModal } from "@/components/PhotoTourModal";
 import { LightboxModal } from "@/components/LightboxModal";
-import {
-  SharedElementPhotoModal,
-  OriginRect,
-} from "@/components/SharedElementPhotoModal";
 import { LISTING_DATA } from "@/data/listingData";
 
 function ListingPageContent() {
@@ -38,14 +34,14 @@ function ListingPageContent() {
   const isPhotoTourOpen = modal === "PHOTO_TOUR_SCROLLABLE";
   const activePhotoId = modalItem ? parseInt(modalItem, 10) : null;
 
-  // Shared-element expanded image state
-  const [expandedPhoto, setExpandedPhoto] = useState<{
-    photoId: number;
-    originRect: OriginRect;
-  } | null>(null);
-
-  const handleOpenPhotoTour = () => {
-    router.push("/?modal=PHOTO_TOUR_SCROLLABLE", { scroll: false });
+  const handleOpenPhotoTour = (photoId?: number) => {
+    if (photoId) {
+      router.push(`/?modal=PHOTO_TOUR_SCROLLABLE&modalItem=${photoId}`, {
+        scroll: false,
+      });
+    } else {
+      router.push("/?modal=PHOTO_TOUR_SCROLLABLE", { scroll: false });
+    }
   };
 
   const handleCloseModals = () => {
@@ -68,18 +64,6 @@ function ListingPageContent() {
     router.push("/?modal=PHOTO_TOUR_SCROLLABLE", { scroll: false });
   };
 
-  const handleOpenExpandedPhoto = (photoId: number, rect: OriginRect) => {
-    setExpandedPhoto({ photoId, originRect: rect });
-  };
-
-  const handleCloseExpandedPhoto = () => {
-    setExpandedPhoto(null);
-  };
-
-  const handleNavigateExpandedPhoto = (photoId: number) => {
-    setExpandedPhoto((prev) => (prev ? { ...prev, photoId } : null));
-  };
-
   return (
     <div className="min-h-screen bg-white text-[#222222]">
       {/* Top Header */}
@@ -100,7 +84,6 @@ function ListingPageContent() {
         <HeroPhotoGrid
           photos={LISTING_DATA.photos}
           onOpenPhotoTour={handleOpenPhotoTour}
-          onOpenExpandedPhoto={handleOpenExpandedPhoto}
         />
 
         {/* 2-Column Split: Content & Sticky Sidebar */}
@@ -181,23 +164,6 @@ function ListingPageContent() {
         {/* Bottom Related Listings */}
         <NearbyListingsSection listings={LISTING_DATA.nearbyListings} />
       </main>
-
-      {/* Shared-Element Expanding Photo Viewer with Physical Growth Animation */}
-      <AnimatePresence>
-        {expandedPhoto && (
-          <SharedElementPhotoModal
-            key="shared-element-photo-modal"
-            photo={
-              LISTING_DATA.photos.find((p) => p.id === expandedPhoto.photoId) ||
-              LISTING_DATA.photos[0]
-            }
-            photos={LISTING_DATA.photos}
-            originRect={expandedPhoto.originRect}
-            onClose={handleCloseExpandedPhoto}
-            onNavigate={handleNavigateExpandedPhoto}
-          />
-        )}
-      </AnimatePresence>
 
       {/* Overlay View 1: Full-Screen Photo Tour with AnimatePresence */}
       <AnimatePresence>
