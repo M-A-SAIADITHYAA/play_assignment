@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronRight, MapPin, X } from "lucide-react";
+import Image from "next/image";
+import { ChevronRight, X } from "lucide-react";
 
 interface LocationSectionProps {
   location: string;
@@ -16,50 +17,43 @@ export function LocationSection({
 
   return (
     <div id="location" className="py-8 border-b border-[#ebebeb]">
-      <h3 className="text-xl font-semibold text-[#222222]">Where you’ll be</h3>
-      <p className="mt-1 text-sm text-[#717171]">{location}</p>
+      <h3 className="text-xl sm:text-[22px] font-semibold text-[#222222]">
+        Where you’ll be
+      </h3>
+      <p className="mt-2 text-base text-[#222222]">{location}</p>
 
-      {/* Styled Interactive Map Preview */}
-      <div className="relative mt-6 h-80 w-full overflow-hidden rounded-2xl border border-[#dddddd] shadow-inner bg-[#e5e3df]">
-        <iframe
-          title="Listing Location Map"
-          className="h-full w-full border-0"
-          loading="lazy"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=73.7500%2C15.5000%2C73.7800%2C15.5300&amp;layer=mapnik&amp;marker=15.5186%2C73.7667"
+      {/* Map Graphic Preview matching reference */}
+      <div className="relative mt-6 w-full overflow-hidden rounded-2xl aspect-[937/402]">
+        <Image
+          src="/location-map.png"
+          alt="Map showing Candolim, Goa, India"
+          fill
+          sizes="(max-width: 1120px) 100vw, 1120px"
+          className="object-cover"
+          priority
         />
-
-        {/* Custom Marker Overlay */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ff385c] text-white shadow-xl ring-4 ring-white/80 animate-bounce">
-            <MapPin size={24} />
-          </div>
-        </div>
       </div>
 
-      <div className="mt-6">
+      <p className="mt-6 text-sm text-[#222222]">
+        Exact location will be provided after booking.
+      </p>
+
+      <div className="mt-8">
         <h4 className="text-base font-semibold text-[#222222]">
-          Candolim, Goa, India
+          Neighbourhood highlights
         </h4>
-        <p className="mt-1 text-sm text-[#717171]">
-          Exact location will be provided after booking.
+        <p className="mt-2 text-sm sm:text-[15px] text-[#222222] leading-relaxed max-w-3xl">
+          {neighbourhoodHighlight}
         </p>
 
-        <div className="mt-4">
-          <h5 className="text-sm font-semibold text-[#222222]">
-            Neighbourhood highlights
-          </h5>
-          <p className="mt-1 text-sm text-[#222222] leading-relaxed">
-            {neighbourhoodHighlight}
-          </p>
-
-          <button
-            onClick={() => setShowLocationModal(true)}
-            className="mt-3 flex items-center gap-1 text-sm font-semibold text-[#222222] underline underline-offset-4 hover:opacity-80"
-          >
-            <span>Show more</span>
-            <ChevronRight size={16} />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setShowLocationModal(true)}
+          className="mt-3 inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-[#222222] underline underline-offset-2 hover:opacity-80 cursor-pointer"
+        >
+          <span>Show more</span>
+          <ChevronRight size={16} />
+        </button>
       </div>
 
       {showLocationModal && (
@@ -72,7 +66,7 @@ export function LocationSection({
             <button
               onClick={() => setShowLocationModal(false)}
               aria-label="Close location modal"
-              className="absolute left-6 top-6 rounded-full p-2 hover:bg-[#f7f7f7]"
+              className="absolute left-6 top-6 rounded-full p-2 hover:bg-[#f7f7f7] cursor-pointer"
             >
               <X size={20} />
             </button>

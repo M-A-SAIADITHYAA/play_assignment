@@ -220,3 +220,21 @@ This document records the exact sequence of prompts, agent directives, and execu
     * Removed obsolete `src/components/SharedElementPhotoModal.tsx`.
   * Verified build (`npm run build`) and tested modal navigation via Chrome automation.
   * Rebuilt production build and updated [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).
+
+---
+
+### Step 18: Location Map & "Where you'll be" Exact Visual Replication
+* **User Prompt**: *"i need this in our orignal website instead of the map" [attached screenshot of Where you'll be section with custom coastal map graphic]*
+* **Agent Action**:
+  * Extracted, 2x retina-upscaled (1874x804), and applied anti-aliased rounded corner transparency mask to the exact map graphic into `public/location-map.png`:
+    * Replicated authentic Airbnb Candolim coastal map with water boundary, subtle grid lines, green region circles, centered house pin, search button, and +/- zoom buttons.
+  * Redesigned [`src/components/LocationSection.tsx`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone/src/components/LocationSection.tsx):
+    * Replaced the OpenStreetMap iframe and bouncing pin with the pixel-perfect map graphic component matching the user screenshot.
+    * Replicated exact typography and layout:
+      * Section title: `Where you’ll be`
+      * Subtitle: `Candolim, Goa, India`
+      * Rounded-2xl responsive map container (`aspect-[937/402]`).
+      * Followed directly by `Exact location will be provided after booking.`
+      * Followed by `Neighbourhood highlights` description and underlined `Show more >` modal trigger.
+  * Verified visual layout via headless Chrome screenshots.
+  * Recompiled production build and refreshed [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).
