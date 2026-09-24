@@ -11,11 +11,11 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-30 w-full border-b border-[#ebebeb] bg-white">
-      <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between px-6 lg:px-10">
+      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6 lg:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center" aria-label="Airbnb homepage">
           <svg
-            className="h-8 w-auto text-[#ff385c]"
+            className="h-[26px] w-auto text-[#ff385c]"
             viewBox="0 0 320.1 99.9"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
@@ -27,47 +27,51 @@ export function Header() {
         {/* Central Search Bar */}
         <div
           onClick={() => setShowSearchModal(!showSearchModal)}
-          className="hidden md:flex items-center divide-x divide-[#ebebeb] rounded-full border border-[#dddddd] py-2 pl-4 pr-2 shadow-sm transition-shadow duration-200 hover:shadow-md cursor-pointer"
+          className="hidden md:flex items-center rounded-full border border-[#dddddd] py-1.5 pl-3.5 pr-2 shadow-sm transition-shadow duration-200 hover:shadow-md cursor-pointer"
         >
-          <button className="flex items-center gap-2.5 pr-4 text-sm font-semibold text-[#222222]">
+          <button className="flex items-center gap-2 pr-3 text-[13px] font-semibold text-[#222222]">
             <Image
               src="/house-icon.png"
               alt="House icon"
-              width={26}
-              height={24}
+              width={22}
+              height={20}
               priority
-              className="h-6 w-auto object-contain"
+              className="h-5 w-auto object-contain"
             />
             <span>Anywhere</span>
           </button>
-          <button className="px-4 text-sm font-semibold text-[#222222]">Anytime</button>
-          <div className="flex items-center gap-3 pl-4">
-            <span className="text-sm text-[#717171]">Add guests</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff385c] text-white">
-              <Search size={14} strokeWidth={2.5} />
+          <div className="h-4 w-[1px] bg-[#ebebeb]" />
+          <button className="px-3 text-[13px] font-semibold text-[#222222]">
+            Anytime
+          </button>
+          <div className="h-4 w-[1px] bg-[#ebebeb]" />
+          <div className="flex items-center gap-3 pl-3">
+            <span className="text-[13px] text-[#717171]">Add guests</span>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff385c] text-white">
+              <Search size={12} strokeWidth={2.8} />
             </div>
           </div>
         </div>
 
         {/* Right Navigation Controls */}
-        <div className="flex items-center gap-2">
-          <button className="rounded-full px-4 py-2.5 text-sm font-semibold text-[#222222] transition hover:bg-[#f7f7f7]">
+        <div className="flex items-center gap-2.5">
+          <button className="rounded-full px-3.5 py-2 text-[13px] font-semibold text-[#222222] transition hover:bg-[#f7f7f7]">
             Become a host
           </button>
           <button
             aria-label="Choose a language and currency"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-[#222222] transition hover:bg-[#f7f7f7]"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f2f2f2] text-[#222222] transition hover:bg-[#e8e8e8]"
           >
-            <Globe size={18} />
+            <Globe size={15} strokeWidth={1.8} />
           </button>
           
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
               aria-label="Open main menu"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#dddddd] text-[#222222] transition hover:shadow-md"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f2f2f2] text-[#222222] transition hover:bg-[#e8e8e8]"
             >
-              <Menu size={16} />
+              <Menu size={15} strokeWidth={2.4} />
             </button>
 
             {showUserMenu && (

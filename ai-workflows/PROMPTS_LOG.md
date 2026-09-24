@@ -271,3 +271,41 @@ This document records the exact sequence of prompts, agent directives, and execu
         * `Message host` button and shield protection notice.
   * Verified visual layout with headless Chrome screenshots against reference image.
   * Recompiled production build and refreshed [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).
+
+---
+
+### Step 21: "Things to know" Section Exact Visual Replication
+* **User Prompt**: *"also this section also i need exactlly like this" [attached screenshot of Things to know section with 3 columns, outline icons, and exact policy text]*
+* **Agent Action**:
+  * Extracted and implemented pixel-perfect vector outline SVG icons matching the reference screenshot:
+    * **Cancellation policy**: Rounded calendar outline with dual top binder tabs, horizontal header dividing line, and centered "X" cross mark.
+    * **House rules**: Diagonal key outline angled at 45° with circular head, hollow keyhole center, and stepped bottom tooth.
+    * **Safety & property**: Authentic Airbnb safety shield outline with slight top peak and vertical center dividing line.
+  * Redesigned [`src/components/ThingsToKnowSection.tsx`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone/src/components/ThingsToKnowSection.tsx):
+    * Replicated authentic 3-column layout matching reference proportions and typography.
+    * Integrated exact body text:
+      * Cancellation policy: Added `Review this host’s full policy for details.` below main cancellation terms.
+      * House rules: 3 cleanly spaced items (`Check-in after 2:00 pm`, `Checkout before 11:00 am`, `3 guests maximum`).
+      * Safety & property: 3 cleanly spaced items (`Carbon monoxide alarm not reported`, `Smoke alarm not reported`, `Exterior security cameras on property`).
+    * Replaced chevron links (`Learn more >`) with authentic plain underlined text buttons (`Learn more`) matching the reference image.
+    * Retained full modal interactivity for host policies on click.
+  * Verified visual fidelity with headless Chrome screenshots directly against reference image (`media_1790269232360.png`).
+  * Recompiled production build (`npm run build`) and refreshed production server.
+  * Recreated and verified lightweight offline archive [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip) (< 1MB).
+
+---
+
+### Step 22: Header Refinement & Grey Background on Globe/Profile Buttons
+* **User Prompt**: *"i need header like this , slight changes regarding spacing is required here , observe the right corner i need that grey background in that globe and profile pic" [attached screenshot of Header and Title section]*
+* **Agent Action**:
+  * Redesigned and refined [`src/components/Header.tsx`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone/src/components/Header.tsx):
+    * Replaced transparent globe and bordered menu buttons with circular solid `#f2f2f2` light grey background buttons matching the reference image.
+    * Adjusted icon sizes and stroke weights for optimal visual clarity: `<Globe size={15} strokeWidth={1.8} />` and `<Menu size={15} strokeWidth={2.4} />`.
+    * Refined navbar vertical height to sleek compact `h-16` (64px) with subtle bottom divider border (`border-b border-[#ebebeb]`).
+    * Balanced horizontal spacing and element padding across left logo, central search pill, and right action controls (`gap-2.5`, `px-3.5 py-2`).
+    * Proportioned central search bar pill with authentic divider marks (`h-4 w-[1px] bg-[#ebebeb]`), house illustration, and compact circular coral search button.
+  * Verified visual fidelity with headless Chrome screenshots against user uploaded reference (`media_1790269321660.png`).
+  * Rebuilt production build (`npm run build`) and verified live server response.
+  * Updated offline archive [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip) (< 1MB).
+
+
