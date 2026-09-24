@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Star, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Review, LISTING_DATA } from "@/data/listingData";
 
 interface ReviewsSectionProps {
@@ -127,7 +127,6 @@ export function ReviewsSection({
   reviewCount,
   reviews,
 }: ReviewsSectionProps) {
-  const [showAllModal, setShowAllModal] = useState(false);
   const [activeFilterTag, setActiveFilterTag] = useState<string | null>(null);
   const [expandedReviews, setExpandedReviews] = useState<Record<string, boolean>>({});
 
@@ -205,7 +204,7 @@ export function ReviewsSection({
           This home is a guest favourite based on ratings, reviews and reliability
         </p>
         <button
-          onClick={() => setShowAllModal(true)}
+          type="button"
           className="mt-2 text-sm font-semibold underline text-[#222222] hover:text-black cursor-pointer"
         >
           How reviews work
@@ -467,73 +466,12 @@ export function ReviewsSection({
       {/* 5. Show all reviews CTA */}
       <div className="mt-8">
         <button
-          onClick={() => setShowAllModal(true)}
-          className="rounded-lg border border-[#222222] px-6 py-3 text-base font-semibold text-[#222222] transition hover:bg-[#f7f7f7] active:scale-[0.98]"
+          type="button"
+          className="rounded-lg border border-[#222222] px-6 py-3 text-base font-semibold text-[#222222] transition hover:bg-[#f7f7f7] active:scale-[0.98] cursor-pointer"
         >
           Show all {reviewCount} reviews
         </button>
       </div>
-
-      {/* Full Reviews Modal */}
-      {showAllModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-6"
-        >
-          <div className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-8 shadow-2xl">
-            <button
-              onClick={() => setShowAllModal(false)}
-              aria-label="Close reviews modal"
-              className="absolute left-6 top-6 rounded-full p-2 hover:bg-[#f7f7f7]"
-            >
-              <X size={20} />
-            </button>
-
-            <div className="mt-8">
-              <div className="flex items-center gap-2 text-2xl font-bold text-[#222222]">
-                <Star size={24} className="fill-[#222222]" />
-                <span>{rating.toFixed(2)} · {reviewCount} reviews</span>
-              </div>
-
-              <div className="mt-6 divide-y divide-[#ebebeb]">
-                {reviews.map((rev) => (
-                  <div key={rev.id} className="py-6">
-                    <div className="flex items-center gap-3">
-                      {rev.avatarUrl ? (
-                        <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full">
-                          <Image
-                            src={rev.avatarUrl}
-                            alt={rev.author}
-                            fill
-                            sizes="48px"
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-base font-bold text-white shadow-sm"
-                          style={{ backgroundColor: rev.avatarColor }}
-                        >
-                          {rev.author.charAt(0)}
-                        </div>
-                      )}
-                      <div>
-                        <div className="font-semibold text-base text-[#222222]">{rev.author}</div>
-                        <div className="text-sm text-[#717171]">{rev.membership}</div>
-                      </div>
-                    </div>
-                    <div className="mt-2 text-xs font-semibold text-[#222222]">{rev.date}</div>
-                    <p className="mt-3 text-sm text-[#222222] leading-relaxed">
-                      {rev.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

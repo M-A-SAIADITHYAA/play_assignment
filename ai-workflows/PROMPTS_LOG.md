@@ -238,3 +238,14 @@ This document records the exact sequence of prompts, agent directives, and execu
       * Followed by `Neighbourhood highlights` description and underlined `Show more >` modal trigger.
   * Verified visual layout via headless Chrome screenshots.
   * Recompiled production build and refreshed [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).
+
+---
+
+### Step 19: Disable "Show all 19 reviews" Action
+* **User Prompt**: *"this show button should not do anything" [attached screenshot of 'Show all 19 reviews' button]*
+* **Agent Action**:
+  * Updated [`src/components/ReviewsSection.tsx`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone/src/components/ReviewsSection.tsx):
+    * Converted the `"Show all {reviewCount} reviews"` button into a static presentation button with `type="button"` and removed the click handler so it triggers no modal or navigation.
+    * Cleaned up unused modal code and state.
+  * Tested and verified with Chrome CDP automation that clicking the button performs no action and opens no modal.
+  * Recompiled production build and updated [`airbnb-clone-submission.zip`](file:///Users/saiadithyaa/Downloads/play_assign/airbnb-clone-submission.zip).
