@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Production-Scale Vacation-Rental Marketplace Architecture</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 1600px;
+      min-height: 1100px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      font-size: 15px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+    .diagram-container {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+    .tier-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tier-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tier-1 { border-top: 4px solid #38bdf8; }
+    .tier-2 { border-top: 4px solid #818cf8; }
+    .tier-3 { border-top: 4px solid #f43f5e; }
+    .tier-4 { border-top: 4px solid #10b981; }
+    .tier-5 { border-top: 4px solid #fbbf24; }
+
+    .node {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: all 0.2s;
+    }
+    .node-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .node-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .node-tech {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 2px 6px;
+      background: #334155;
+      color: #38bdf8;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .footer-notes {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      background: #0f172a;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+    }
+    .note-item h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 4px;
+    }
+    .note-item p {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+    .arrow {
+      color: #64748b;
+      font-size: 14px;
+      text-align: center;
+      margin: -6px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Production-Scale Vacation-Rental Marketplace Architecture</h1>
+    <p>High-Availability, Multi-Region Scaling Strategy for Airbnb-Scale Workloads</p>
+  </div>
+
+  <div class="diagram-container">
+    <div class="tier-grid">
+      <!-- Tier 1: Frontend & Edge Delivery -->
+      <div class="tier-card tier-1">
+        <div class="tier-title" style="color: #38bdf8;">
+          <span>1. Client & Edge</span>
+          <span>⚡</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Next.js Web Client</div>
+          <div class="node-desc">Hybrid SSR + ISR (Incremental Static Regeneration) for high SEO & listing pages.</div>
+          <div class="node-tech">Next.js 15 / React / Tailwind</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Mobile Apps</div>
+          <div class="node-desc">Native Android & iOS apps connecting to unified Edge API.</div>
+          <div class="node-tech">React Native / Swift / Kotlin</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Global Anycast CDN</div>
+          <div class="node-desc">Geo-distributed edge caching for static assets, HTML fragments & anti-DDoS.</div>
+          <div class="node-tech">Cloudflare / AWS CloudFront</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Dynamic Image Optimizer</div>
+          <div class="node-desc">WebP / AVIF transformation and responsive image resizing at the edge.</div>
+          <div class="node-tech">Cloudinary / Cloudflare Images</div>
+        </div>
+      </div>
+
+      <!-- Tier 2: Gateway & Security -->
+      <div class="tier-card tier-2">
+        <div class="tier-title" style="color: #818cf8;">
+          <span>2. Gateway & Edge API</span>
+          <span>🛡️</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Cloud WAF & DDoS Shield</div>
+          <div class="node-desc">Kasada / Cloudflare Bot Mitigation, rate limiting & IP reputation defense.</div>
+          <div class="node-tech">AWS WAF / Shield / BotID</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Unified API Gateway</div>
+          <div class="node-desc">SSL termination, JWT auth validation, telemetry & intelligent routing.</div>
+          <div class="node-tech">Envoy / Kong Gateway</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">GraphQL Federation</div>
+          <div class="node-desc">Apollo Federation schema aggregating subgraphs across microservices.</div>
+          <div class="node-tech">Apollo Router / GraphQL</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Edge Rate Limiter</div>
+          <div class="node-desc">Token bucket algorithm preventing abuse and scrapers.</div>
+          <div class="node-tech">Redis Edge / Lua Scripts</div>
+        </div>
+      </div>
+
+      <!-- Tier 3: Core Microservices -->
+      <div class="tier-card tier-3">
+        <div class="tier-title" style="color: #f43f5e;">
+          <span>3. Core Microservices</span>
+          <span>⚙️</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Search & Discovery Service</div>
+          <div class="node-desc">Geospatial bounds search, price filtering, AI listing ranker.</div>
+          <div class="node-tech">Go / OpenSearch Client</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Booking & Reservation Engine</div>
+          <div class="node-desc">Distributed Saga pattern, optimistic locking, idempotent booking pipeline.</div>
+          <div class="node-tech">Java Spring Boot / Temporal</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Availability & Calendar Engine</div>
+          <div class="node-desc">In-memory bitset availability tracking, instant conflict rejection.</div>
+          <div class="node-tech">Rust / Redis Bitsets</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Listing & Host Management</div>
+          <div class="node-desc">Property lifecycle, amenities, photo galleries, instant pricing updates.</div>
+          <div class="node-tech">Node.js / TypeScript</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Payment & Settlement</div>
+          <div class="node-desc">PCI-DSS compliant escrow, multi-currency processing & payouts.</div>
+          <div class="node-tech">Stripe / Adyen Integration</div>
+        </div>
+      </div>
+
+      <!-- Tier 4: Storage & Caching Tier -->
+      <div class="tier-card tier-4">
+        <div class="tier-title" style="color: #10b981;">
+          <span>4. Storage & Data Tier</span>
+          <span>💾</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Primary ACID Database</div>
+          <div class="node-desc">Aurora PostgreSQL cluster with multi-AZ replication & dedicated read replicas.</div>
+          <div class="node-tech">AWS Aurora PostgreSQL</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Geospatial Search Engine</div>
+          <div class="node-desc">Elasticsearch / OpenSearch cluster with geo_point indexing & fuzzy match.</div>
+          <div class="node-tech">OpenSearch 2.x Cluster</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Distributed Cache Layer</div>
+          <div class="node-desc">Cluster for session tokens, frequent listing queries & availability bitsets.</div>
+          <div class="node-tech">Redis 7 Cluster</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Object Storage & CDN</div>
+          <div class="node-desc">S3 buckets with versioning, lifecycle rules & origin access control.</div>
+          <div class="node-tech">AWS S3 + CloudFront</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Event Streaming Backbone</div>
+          <div class="node-desc">Kafka log for async CDC (Debezium), search indexing & notifications.</div>
+          <div class="node-tech">Apache Kafka / MSK</div>
+        </div>
+      </div>
+
+      <!-- Tier 5: Deployment & Observability -->
+      <div class="tier-card tier-5">
+        <div class="tier-title" style="color: #fbbf24;">
+          <span>5. Deploy & Reliability</span>
+          <span>🚀</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Multi-Region Kubernetes</div>
+          <div class="node-desc">EKS clusters with Horizontal Pod Autoscaler (HPA) & Karpenter node auto-scale.</div>
+          <div class="node-tech">AWS EKS / Kubernetes</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">GitOps CI/CD Pipeline</div>
+          <div class="node-desc">Canary deployments, automated rollback, container scanning.</div>
+          <div class="node-tech">ArgoCD / GitHub Actions</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Observability & APM</div>
+          <div class="node-desc">Distributed tracing, synthetic monitoring & SLA tracking.</div>
+          <div class="node-tech">Datadog / OpenTelemetry</div>
+        </div>
+
+        <div class="node">
+          <div class="node-title">Disaster Recovery & Backup</div>
+          <div class="node-desc">Continuous WAL archiving, point-in-time recovery (PITR) across regions.</div>
+          <div class="node-tech">Cross-Region Replication</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architectural Strategy Highlights -->
+    <div class="footer-notes">
+      <div class="note-item">
+        <h4 style="color: #38bdf8;">Frontend Scaling (ISR + Edge)</h4>
+        <p>Pre-renders listing pages with Incremental Static Regeneration (revalidate: 60s). 95% of traffic hits global edge cache with sub-50ms TTFB.</p>
+      </div>
+
+      <div class="note-item">
+        <h4 style="color: #818cf8;">Search & Discovery Strategy</h4>
+        <p>Change Data Capture (CDC via Kafka) replicates listing mutations from PostgreSQL to OpenSearch within 100ms for real-time geospatial search.</p>
+      </div>
+
+      <div class="note-item">
+        <h4 style="color: #f43f5e;">Concurrency & Double-Booking</h4>
+        <p>Redis distributed locks (Redlock) protect availability bitsets during reservation hold; database optimistic locking prevents race conditions.</p>
+      </div>
+
+      <div class="note-item">
+        <h4 style="color: #10b981;">Deployment & Active-Active</h4>
+        <p>Stateless containerized services run across 3 AWS Availability Zones with automated failover and zero-downtime canary rollouts.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
